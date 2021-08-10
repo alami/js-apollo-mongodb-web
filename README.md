@@ -1,1 +1,1 @@
-# -js-apollo-mongodb
+# js-apollo-mongodb
