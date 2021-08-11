@@ -7,11 +7,14 @@ module.exports = gql`
         email: String!
         avatar: String
         notes: [Note!]!
+        favorites: [Note!]!
     }
     type Note {
         id: ID!
         content: String!
         author: User!
+        favoriteCount: Int!
+        favoritedBy: [User!]
         createdAt: DateTime!
         updatedAt: DateTime!
     }
@@ -39,6 +42,7 @@ module.exports = gql`
         newNote(content: String!): Note!
         updateNote(id: ID!, content: String!): Note!
         deleteNote(id: ID!): Boolean!
+        toggleFavorite(id: ID!): Note!
 
         newPizza(size: String! slices: Int): Pizza!
         updatePizza(id: ID!, size: String! slices: Int): Pizza!

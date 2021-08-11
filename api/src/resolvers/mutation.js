@@ -93,8 +93,48 @@ module.exports = {
             }
         );
     },
+    toggleFavorite: async (parent, { id }, { models, user }) => {
+        if (!user) { // Если контекст пользователя не передан, выбрасываем ошибку
+            throw new AuthenticationError();
+        }  // Проверяем, отмечал ли пользователь заметку как избранную
+        let noteCheck = await models.Note.findById(id);
+        const hasUser = noteCheck.favoritedBy.indexOf(user.id);
+// Если пользователь есть в списке, удаляем его оттуда и уменьшаем значение favoriteCount на 1
+        if (hasUser >= 0) {
+            return await models.Note.findByIdAndUpdate(
+                id,
+                {
+                    $pull: {
+                        favoritedBy: mongoose.Types.ObjectId(user.id)
+                    },
+                    $inc: {
+                        favoriteCount: -1
+                    }
+                },
+                {// Устанавливаем new как true, чтобы вернуть обновленный документ
+                    new: true
+                }
+            );
+        } else {
+// Если пользователя в списке нет, добавляем его туда и увеличиваем значение favoriteCount на 1
+                return await models.Note.findByIdAndUpdate(
+                    id,
+                    {
+                        $push: {
+                            favoritedBy: mongoose.Types.ObjectId(user.id)
+                        },
+                        $inc: {
+                            favoriteCount: 1
+                        }
+                    },
+                    {
+                        new: true
+                    }
+                );
+            }
+        },
 
-    newPizza: async (parent, args, { models }) => {
+        newPizza: async (parent, args, { models }) => {
         return await models.Pizza.create({
             size: args.size,
             slices: args.slices
