@@ -28,6 +28,7 @@ module.exports = gql`
         note(id: ID!): Note!
         pizzas: [Pizza!]!
         pizza(id: ID!): Pizza!
+        users: [User!]!
     }
     type Mutation {
         signUp(username: String!, email: String!, password: String!): String!
