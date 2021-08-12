@@ -18,6 +18,11 @@ module.exports = gql`
         createdAt: DateTime!
         updatedAt: DateTime!
     }
+    type NoteFeed {
+        notes: [Note]!
+        cursor: String!
+        hasNextPage: Boolean!
+    }
     type Pizza {
         id: ID!
         size: String!
@@ -34,6 +39,7 @@ module.exports = gql`
         users: [User!]!
         user(username: String!): User
         me: User!
+        noteFeed(cursor: String): NoteFeed
     }
     type Mutation {
         signUp(username: String!, email: String!, password: String!): String!
