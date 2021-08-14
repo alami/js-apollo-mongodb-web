@@ -33,7 +33,9 @@ const Home=() =>{
     return (
         <div>
             {console.log(data)}
-            <p>The data loaded!</p>
+            {data.noteFeed.notes.map(note => (
+                <div key={note.id}>{note.author.username}</div>
+            ))}
             <Button>Click me!</Button>
         </div>
     );
