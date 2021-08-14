@@ -15,7 +15,6 @@ export default createGlobalStyle`
   }
 
   body {
-    margin: 10px 20px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
     background-color: #fff;
