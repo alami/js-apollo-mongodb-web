@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from '../components/Button';
+import NoteFeed from '../components/NoteFeed';
+
 import ReactMarkdown from 'react-markdown';
 import { useQuery, gql } from '@apollo/client';
 
@@ -30,24 +32,9 @@ const Home=() =>{
     if (loading) return <p>Loading...</p>;
     // Если при получении данных произошел сбой, отображаем сообщение об ошибке
     if (error) return <p>Error!</p>;
+    // Если загрузка данных произошла успешно, отображаем их в UI
+    return <NoteFeed notes={data.noteFeed.notes} />;
 
-    return (
-        <div>
-            {console.log(data)}
-            {data.noteFeed.notes.map(note => (
-                <article key={note.id}>
-                    <img
-                        src={note.author.avatar}
-                        alt={`${note.author.username} avatar`}
-                        height="50px"
-                    />{' '}
-                    {note.author.username} {note.createdAt} {note.favoriteCount}{' '}
-                    <ReactMarkdown source={note.content} />
-                </article>
-            ))}
-            <Button>Click me!</Button>
-        </div>
-    );
 };
 export default Home;
 
