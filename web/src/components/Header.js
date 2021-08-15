@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import logo from '../img/logo.svg';
 
 import { useQuery, gql } from '@apollo/client';
-import { Link } from 'react-router-dom';
+// Импортируем Link и withRouter из React Router
+import { Link, withRouter } from 'react-router-dom';
+// Импортируем компонент ButtonAsLink
+import ButtonAsLink from './ButtonAsLink';
+
 // Локальный запрос
 const IS_LOGGED_IN = gql`
     {
@@ -33,7 +37,7 @@ const LogoText = styled.h1`
 
 const Header = props => {
     // Хук запроса для проверки состояния авторизации пользователя
-    const { data } = useQuery(IS_LOGGED_IN);
+    const { data, client } = useQuery(IS_LOGGED_IN);
 
     return (
         <HeaderBar>
@@ -43,7 +47,14 @@ const Header = props => {
 случае отображаем варианты sign in и sign up */}
             <UserState>
                 {data.isLoggedIn ? (
-                    <p>Log Out</p>
+                    <ButtonAsLink
+                        onClick={() => {
+localStorage.removeItem('token');// Удаляем токен
+client.resetStore();                 // Очищаем кэш приложения
+client.writeData({ data: { isLoggedIn: false } });// Обновляем локальное состояние
+props.history.push('/');             // Перенаправляем пользователя на домашнюю страницу
+                        }}
+                    >Log Out</ButtonAsLink>
                 ):(
                     <p>
                         <Link to={ '/signin'}>Sign In</Link> or{' '}

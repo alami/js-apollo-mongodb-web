@@ -32,6 +32,8 @@ const data = {
 };
 // Записываем данные кэша при начальной загрузке
 cache.writeData({ data });
+// Записываем данные кэша после его сброса
+client.onResetStore(() => cache.writeData({ data }));
 
 // Импортируем глобальные стили
 import GlobalStyle from '/components/GlobalStyle';
