@@ -49,7 +49,11 @@ const SignUp = props => {
     const [signUp, { loading, error }] = useMutation(SIGNUP_USER, {
         onCompleted: data => {
             // Когда мутация завершена, выводим в консоль JSON Web Token
-            console.log(data.signUp);
+            // console.log(data.signUp);
+            // Сохраняем JWT в localStorage
+            localStorage.setItem('token', data.signUp);
+            // Перенаправляем пользователя на домашнюю страницу
+            props.history.push('/');
         }
     });
 
