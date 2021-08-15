@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache
+} from '@apollo/client';
+import { setContext } from 'apollo-link-context';
 
-// Импортируем библиотеки Apollo Client
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
-import { setContext } from 'apollo-link-context';   //из Apollo-пакета
+// Импортируем глобальные стили
+import GlobalStyle from '/components/GlobalStyle';
+// Импортируем маршруты
+import Pages from '/pages';
+
 
 const uri = process.env.API_URI;  // Настраиваем API URI и кэш
-const cache = new InMemoryCache();
 const httpLink = createHttpLink({ uri });
+const cache = new InMemoryCache();
 
 // Проверяем наличие токена и возвращаем заголовки в контекст
 const authLink = setContext((_, { headers }) => {
@@ -26,21 +35,18 @@ const client = new ApolloClient({
     resolvers: {},
     connectToDevTools: true
 });
+
 // Проверяем наличие локального токена
 const data = {
     isLoggedIn: !!localStorage.getItem('token')
 };
+
 // Записываем данные кэша при начальной загрузке
 cache.writeData({ data });
 // Записываем данные кэша после его сброса
 client.onResetStore(() => cache.writeData({ data }));
 
-// Импортируем глобальные стили
-import GlobalStyle from '/components/GlobalStyle';
-// Импортируем маршруты
-import Pages from '/pages';
-
-const App=() =>{
+const App = () => {
     return (
         <ApolloProvider client={client}>
         <GlobalStyle />
