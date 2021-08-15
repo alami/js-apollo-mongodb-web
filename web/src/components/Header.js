@@ -43,8 +43,7 @@ const Header = props => {
         <HeaderBar>
             <img src={logo} alt="Notedly Logo" height="40" />
             <LogoText>Notedly</LogoText>
-            {/* Если авторизован, отображаем ссылку logout, в противном
-случае отображаем варианты sign in и sign up */}
+            {/* Если авторизован, отображаем ссылку logout, иначе sign in и sign up */}
             <UserState>
                 {data.isLoggedIn ? (
                     <ButtonAsLink
