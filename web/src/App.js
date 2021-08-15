@@ -26,6 +26,12 @@ const client = new ApolloClient({
     resolvers: {},
     connectToDevTools: true
 });
+// Проверяем наличие локального токена
+const data = {
+    isLoggedIn: !!localStorage.getItem('token')
+};
+// Записываем данные кэша при начальной загрузке
+cache.writeData({ data });
 
 // Импортируем глобальные стили
 import GlobalStyle from '/components/GlobalStyle';
