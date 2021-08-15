@@ -10,14 +10,34 @@ import NotePage from './note';
 import SignUp from './signup';
 import SignIn from './signin';
 import NewNote from './new';
+import EditNote from './edit';
 
 
 import { useQuery, gql } from '@apollo/client';
+import Note from "../../05-CRUD/pages/note";
 const IS_LOGGED_IN = gql`
     {
         isLoggedIn @client
     }
 `;
+
+const Pages = () => {
+    return (
+        <Router>
+            <Layout>
+                <Route exact path="/" component={Home} />
+                <PrivateRoute path="/mynotes" component={MyNotes} />
+                <PrivateRoute path="/favorites" component={Favorites} />
+                <Route path="/note/:id" component={Note} />
+                <Route path="/signup" component={SignUp} />
+                <Route path="/signin" component={SignIn} />
+                <PrivateRoute path="/new" component={NewNote} />
+                <PrivateRoute path="/edit/:id" component={EditNote} />
+            </Layout>
+        </Router>
+    );
+};
+
 // Добавляем компонент PrivateRoute под компонентом 'Pages'
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const { loading, error, data } = useQuery(IS_LOGGED_IN);
@@ -46,20 +66,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     );
 };
 
-const Pages = () => {
-    return (
-        <Router>
-            {/* Оборачиваем наши маршруты в компонент Layout */}
-            <Layout>
-                <Route exact path="/" component={Home} />
-                <PrivateRoute path="/new" component={NewNote} />
-                <PrivateRoute path="/mynotes" component={MyNotes} />
-                <PrivateRoute path="/favorites" component={Favorites} />
-                <Route path="/note/:id" component={NotePage} />
-                <Route path="/signup" component={SignUp} />
-                <Route path="/signin" component={SignIn} />
-            </Layout>
-        </Router>
-    );
-};
 export default Pages;
