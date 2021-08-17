@@ -27,7 +27,7 @@ const GET_NOTES = gql`
 const Feed = props => {
     const { loading, error, data } = useQuery(GET_NOTES);
     // Если данные загружаются, приложение будет показывать индикатор загрузки
-    if (loading) return <Text>Loading</Text>;
+    if (loading) return <Loading />;
     // Если при получении данных произошел сбой, выдаем сообщение об ошибке
     if (error) return <Text>Error loading notes</Text>;
     // Если запрос выполнен успешно и содержит заметки, возвращаем их в ленту
