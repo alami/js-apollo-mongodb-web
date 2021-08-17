@@ -13,4 +13,8 @@ const Feed = props => {
     );
 };
 
+Feed.navigationOptions = {
+    title: 'Feed'
+};
+
 export default Feed;

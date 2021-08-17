@@ -8,5 +8,8 @@ const Favorites = () => {
         </View>
     );
 };
+Favorites.navigationOptions = {
+    title: 'Favorites'
+};
 
 export default Favorites;

@@ -8,5 +8,8 @@ const MyNotes = () => {
         </View>
     );
 };
+MyNotes.navigationOptions = {
+    title: 'My Notes'
+};
 
 export default MyNotes;
