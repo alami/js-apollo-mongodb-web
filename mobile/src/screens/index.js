@@ -14,9 +14,11 @@ import NoteScreen from './note';
 import AuthLoading from './authloading';
 import SignIn from './signin';
 import Settings from './settings';
+import SignUp from './signup';
 
 const AuthStack = createStackNavigator({
-    SignIn: SignIn
+    SignIn: SignIn,
+    SignUp: SignUp
 });
 // Стек навигации
 const FeedStack = createStackNavigator({

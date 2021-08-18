@@ -26,15 +26,25 @@ const ButtonText = styled.Text`
   font-weight: bold;
   font-size: 18px;
 `;
+const SignUp = styled.TouchableOpacity`
+  margin-top: 20px;
+` ;
+const Link = styled.Text`
+  color: #0077cc;
+  font-weight: bold;
+` ;
 
 const UserForm = props => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [username, setUsername] = useState();
+
     const handleSubmit = () => {
         props.action({
             variables: {
                 email: email,
-                password: password
+                password: password,
+                username: username
             }
         });
     };
@@ -49,6 +59,17 @@ const UserForm = props => {
                 autoFocus={true}
                 autoCapitalize="none "
             />
+            {props.formType === 'signUp' && (
+                <View>
+                    <FormLabel>Username</FormLabel>
+                    <StyledInput
+                        onChangeText={text => setUsername(text)}
+                        value={username}
+                        textContentType="username"
+                        autoCapitalize="none"
+                    />
+                </View>
+            )}
             <FormLabel>Password</FormLabel>
             <StyledInput
                 onChangeText={text => setPassword(text)}
@@ -59,6 +80,13 @@ const UserForm = props => {
             <FormButton onPress={handleSubmit}>
                 <ButtonText>Submit</ButtonText>
             </FormButton>
+            {props.formType !== 'signUp' && (
+                <SignUp onPress={() => props.navigation.navigate('SignUp')}>
+                    <Text>
+                        Need an account? <Link>Sign up.</Link>
+                    </Text>
+                </SignUp>
+            )}
         </FormView>
     );
 };
